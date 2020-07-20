@@ -1,0 +1,43 @@
+{% extends 'store/main.html' %}
+{% load static %}
+{% block content %}
+
+
+
+
+
+
+<div class="row">
+    {% for item in items %}
+    <div class="col-lg-4">
+        <img class="thumbnail" src="{{item.image.url}}">
+        <div class="box-element product">
+            <h6><strong>{{item.name}}</strong></h6>
+            <hr>
+
+            <button data-item="{{item.id}}" data-action="add" class="btn btn-outline-secondary add-btn update-cart">Add to Cart</button>
+            
+            <a  class="btn btn-outline-success" href="{% url 'detail' item.id  %}">View</a>
+            
+            <h4 style="display: inline-block; float:right"><strong>${{item.price|floatformat:2}}</strong></h4>
+
+        </div>
+    </div>
+    {% endfor %}
+</div>
+
+<style>
+    .thumbnail{
+        width: 100%;
+        border-radius: 10px;
+        -webkit-box-shadow: -1px -3px 5px -2px rgba(214,214,214,1);
+        -moz-box-shadow: -1px -3px 5px -2px rgba(214,214,214,1);
+        box-shadow: -1px -3px 5px -2px rgba(214,214,214,1);
+    }
+    
+    </style>
+
+
+
+{% endblock content %}
+

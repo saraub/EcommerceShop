@@ -18,3 +18,13 @@ class CustomerForm(ModelForm):
         model = Customer
         fields = '__all__'
         exclude =['user']
+        
+        
+class FilterForm(forms.Form):
+    FILTER_CHOICES = (
+        ('under 1 year of age', 'under 1 year of age'),
+        ('timesince', 'Time Since'),
+        ('timeuntil', 'Time Untill'),
+    )
+
+    filter_by = forms.ChoiceField(choices = FILTER_CHOICES)

@@ -7,6 +7,8 @@ class Item(models.Model):
     name= models.CharField(max_length=200, null=True)
     description= models.CharField(max_length=5000, null=True, blank=True)
     price= models.FloatField()
+    category= models.CharField(max_length=200, null=True,default="uncategorized")
+    
     image= models.ImageField(default='images/bear.png')
     image1= models.ImageField(default='images/bear.png')
     image2= models.ImageField(default='images/bear.png')
@@ -21,6 +23,15 @@ class Customer(models.Model):
     name= models.CharField(max_length=200)
     emial= models.CharField(max_length=200)
     image= models.ImageField()
+    
+    
+    def __str__(self):
+        return self.name
+    
+    
+class Category(models.Model):
+    name= models.CharField(max_length=200, null=True)
+    
     
     
     def __str__(self):

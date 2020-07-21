@@ -7,32 +7,43 @@ from  .decorators import *
 from django.contrib import messages
 from django.contrib.auth.models import Group
 from django.contrib.auth.forms import UserCreationForm
-from .forms import CreateUserForm,CustomerForm
+from .forms import CreateUserForm,CustomerForm,FilterForm
 from django.contrib.auth import authenticate, login, logout
 from .models import *
 from django.contrib.auth.decorators import login_required
 
 @login_required(login_url='store_main')
 def store(request):
+    
+    choices=Category.objects.all()
+    itemname = request.POST.get('selectedTask')
+    show_items=Item.objects.filter(category=itemname)
+    
+   
+        
+      
+        
     if request.user.is_authenticated:       
         customer= request.user.customer
         order, created= Order.objects.get_or_create(customer=customer)
         items= order.ordereditem_set.all()
         cartitems=order.get_total_num_cart
+        
     else:
-        items=['']
+        show_items=['']
         order=[]
         cartitems=[]
+        itemname=[]
     
-    items=Item.objects.all()
-    context= {'items':items,'order':order,'cartitems':cartitems}
+    
+    context= {'show_items':show_items,'order':order,'cartitems':cartitems,'choices':choices,'itemname':itemname}
 
 
     return render(request, 'store/store.html', context)
 
 @login_required(login_url='login')
 def cart(request):
-
+    choices = Category.objects.all()
     if request.user.is_authenticated:       
         customer= request.user.customer
         order, created= Order.objects.get_or_create(customer=customer)
@@ -42,12 +53,13 @@ def cart(request):
         items=['']
         order=[]
         cartitems=[]
-    context={'items':items,'order':order,'cartitems':cartitems}
+    context={'items':items,'order':order,'cartitems':cartitems,'choices':choices}
 
 
     return render(request,'store/cart.html', context)
 
 def checkout(request):
+    choices = Category.objects.all()
     if request.user.is_authenticated:       
         customer= request.user.customer
         order, created= Order.objects.get_or_create(customer=customer)
@@ -57,7 +69,7 @@ def checkout(request):
         items=['']
         order=[]
         cartitems=[]
-    context={'items':items,'order':order,'cartitems':cartitems}
+    context={'items':items,'order':order,'cartitems':cartitems,'choices':choices}
     return render(request,'store/checkout.html', context)
 
 def update(request):
@@ -116,7 +128,7 @@ def payment(request):
 @unauthenticated_user
 def registerPage(request):
  
-        
+        items=Item.objects.all()
     
         form= CreateUserForm()
         
@@ -139,11 +151,12 @@ def registerPage(request):
                 return redirect('login')
                 
         
-        context={'form': form}
+        context={'form': form,'items':items}
         return render(request, 'store/register.html',context)
     
 @unauthenticated_user
 def loginPage(request):
+    items= Item.objects.all()
     
     if request.method=='POST':
        username= request.POST.get('username')
@@ -154,12 +167,12 @@ def loginPage(request):
        user=authenticate(request, username=username,password= password)
        if user is not None:
             login(request, user)
-            return redirect('store')
+            return redirect('home')
        else:
            messages.info(request, 'Username or Password is incorrect')
            
     
-    context = {}
+    context = {'items':items}
     return render(request, 'store/login.html', context)
 
 def logoutUser(request):
@@ -167,15 +180,42 @@ def logoutUser(request):
 	return redirect('login')
 
 def detail(request,id):
-    
+    choices = Category.objects.all()
     item=Item.objects.get(id=id)
     customer= request.user.customer
     order, created= Order.objects.get_or_create(customer=customer)
     cartitems=order.get_total_num_cart
-    context={'item':item,'cartitems':cartitems,'order':order}
+    context={'item':item,'cartitems':cartitems,'order':order,'choices':choices}
     return render(request,'store/detail.html',context)
 
 def store_main(request):
     items= Item.objects.all()
     context ={'items':items}
     return render(request,'store/store_main.html',context)
+
+def home(request):
+    
+    choices=Category.objects.all()
+    show_items=Item.objects.all()
+    
+   
+        
+      
+        
+    if request.user.is_authenticated:       
+        customer= request.user.customer
+        order, created= Order.objects.get_or_create(customer=customer)
+        items= order.ordereditem_set.all()
+        cartitems=order.get_total_num_cart
+        
+    else:
+        show_items=['']
+        order=[]
+        cartitems=[]
+        itemname=[]
+    
+    
+    context= {'show_items':show_items,'order':order,'cartitems':cartitems,'choices':choices}
+
+
+    return render(request, 'store/home.html', context)

@@ -16,7 +16,6 @@ urlpatterns = [
     path('store_main/', views.store_main, name="store_main"),
     path('detail/<id>/', views.detail, name="detail"),
     
- 
- 
+
  
  ]

@@ -12,17 +12,14 @@ from django.contrib.auth import authenticate, login, logout
 from .models import *
 from django.contrib.auth.decorators import login_required
 
+
+
 @login_required(login_url='store_main')
 def store(request):
-    
     choices=Category.objects.all()
     itemname = request.POST.get('selectedTask')
     show_items=Item.objects.filter(category=itemname)
-    
-   
-        
-      
-        
+
     if request.user.is_authenticated:       
         customer= request.user.customer
         order, created= Order.objects.get_or_create(customer=customer)
@@ -37,9 +34,9 @@ def store(request):
     
     
     context= {'show_items':show_items,'order':order,'cartitems':cartitems,'choices':choices,'itemname':itemname}
-
-
     return render(request, 'store/store.html', context)
+
+
 
 @login_required(login_url='login')
 def cart(request):
@@ -58,6 +55,7 @@ def cart(request):
 
     return render(request,'store/cart.html', context)
 
+
 def checkout(request):
     choices = Category.objects.all()
     if request.user.is_authenticated:       
@@ -71,6 +69,8 @@ def checkout(request):
         cartitems=[]
     context={'items':items,'order':order,'cartitems':cartitems,'choices':choices}
     return render(request,'store/checkout.html', context)
+
+
 
 def update(request):
     data= json.loads(request.body)
@@ -98,6 +98,7 @@ def update(request):
         
     return JsonResponse('item was added',safe=False)
 
+
 def payment(request):
 	transaction_id = datetime.datetime.now().timestamp()
 	data = json.loads(request.body)
@@ -122,12 +123,12 @@ def payment(request):
 		state=data['shipping']['state'],
 		zipcode=data['shipping']['zipcode'],
 		)
-		
 
 	return JsonResponse('Payment submitted..', safe=False)
+
+
 @unauthenticated_user
 def registerPage(request):
- 
         items=Item.objects.all()
     
         form= CreateUserForm()
@@ -154,6 +155,7 @@ def registerPage(request):
         context={'form': form,'items':items}
         return render(request, 'store/register.html',context)
     
+    
 @unauthenticated_user
 def loginPage(request):
     items= Item.objects.all()
@@ -175,9 +177,12 @@ def loginPage(request):
     context = {'items':items}
     return render(request, 'store/login.html', context)
 
+
 def logoutUser(request):
 	logout(request)
 	return redirect('login')
+
+
 
 def detail(request,id):
     choices = Category.objects.all()
@@ -188,20 +193,19 @@ def detail(request,id):
     context={'item':item,'cartitems':cartitems,'order':order,'choices':choices}
     return render(request,'store/detail.html',context)
 
+
+
 def store_main(request):
     items= Item.objects.all()
     context ={'items':items}
     return render(request,'store/store_main.html',context)
 
+
+
 def home(request):
-    
     choices=Category.objects.all()
     show_items=Item.objects.all()
-    
-   
-        
-      
-        
+
     if request.user.is_authenticated:       
         customer= request.user.customer
         order, created= Order.objects.get_or_create(customer=customer)
@@ -216,6 +220,4 @@ def home(request):
     
     
     context= {'show_items':show_items,'order':order,'cartitems':cartitems,'choices':choices}
-
-
     return render(request, 'store/home.html', context)

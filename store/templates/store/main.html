@@ -7,37 +7,28 @@
 
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
 
-        
+        <link rel="stylesheet" type="text/css" href="{% static '/css/main.css' %}">
 
         <script type="text/javascript"></script>
-        <script>
-           var user= '{{request.user}}'
-
-
-
-           function getToken(name) {
-		    var cookieValue = null;
-		    if (document.cookie && document.cookie !== '') {
-		        var cookies = document.cookie.split(';');
-		        for (var i = 0; i < cookies.length; i++) {
-		            var cookie = cookies[i].trim();
-		            // Does this cookie string begin with the name we want?
-		            if (cookie.substring(0, name.length + 1) === (name + '=')) {
-		                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-		                break;
-		            }
-		        }
-		    }
-		    return cookieValue;
-		}
-		var csrftoken = getToken('csrftoken')
-        </script>
+      <script>
+          var user= '{{request.user}}'
+          function getToken(name) {
+          var cookieValue = null;
+          if (document.cookie && document.cookie !== '') {
+          var cookies = document.cookie.split(';');
+          for (var i = 0; i < cookies.length; i++) {
+              var cookie = cookies[i].trim();
+              // Does this cookie string begin with the name we want?
+              if (cookie.substring(0, name.length + 1) === (name + '=')) {
+                  cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                  break;}}}
+		      return cookieValue;}
+          var csrftoken = getToken('csrftoken')
+      </script>
 
 
     </head>
 
-
-    
     <body>
 
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -111,12 +102,8 @@
     </body>
 
 </html>
+
 <style>
-    #cart-icon{
-	width:45px;
-	
-	margin-left: 15px;
-}
 
 .thumbnail{
 	width: 100%;
@@ -125,15 +112,5 @@
     -moz-box-shadow: -1px -3px 5px -2px rgba(214,214,214,1);
     box-shadow: -1px -3px 5px -2px rgba(214,214,214,1);
 }
-.hidden{
-	display: none!important;
-}
-.btn1{
-  border-radius: 3px;
-  margin-top: 5px;
-  background-color:rgba(3,4,5,0);
-  color:white;
-}
-
 
 </style>

@@ -2,9 +2,6 @@
 {% load static %}
 {% block content %}
 
-
-
-
 <h2 class="title">Teddies for those who {{itemname}}</h2>
 
 <div class="row">
@@ -25,30 +22,6 @@
     </div>
     {% endfor %}
 </div>
-
-<style>
-    .thumbnail{
-        width: 100%;
-        border-radius: 10px;
-        -webkit-box-shadow: -1px -3px 5px -2px rgba(214,214,214,1);
-        -moz-box-shadow: -1px -3px 5px -2px rgba(214,214,214,1);
-        box-shadow: -1px -3px 5px -2px rgba(214,214,214,1);
-    }
-    #cart-icon{
-	width:45px;
-	display: inline-block;
-	margin-left: 15px;
-}
-.title{
-font-size: 50px;
-font-weight: bold;
-color: rgba(214,214,214,1);
-}
-
-    
-    </style>
-
-
 
 {% endblock content %}
 

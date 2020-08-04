@@ -7,17 +7,18 @@ OnlineShop with register/login/shop/cart/payment function
 
 
 ![ScreenShot](/screenshots/num1.png)
+get registered
 
 
 
 ![ScreenShot](/screenshots/num2.png)
-Create a new blog post
+shop
 
 ![ScreenShot](/screenshots/num3.png)
+check details
 
-Log in
 
 
 
 ![ScreenShot](/screenshots/num4.png)
-Change profile settings
+go to cart
